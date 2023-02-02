@@ -1,4 +1,25 @@
+/*********************************************************************************
+* WEB322 – Assignment 02
+* I declare that this assignment is my own work in accordance with Seneca Academic Policy. No part
+* of this assignment has been copied manually or electronically from any other source
+* (including 3rd party web sites) or distributed to other students.
 
+
+    For better implementation and understanding I took reference from these sites:
+
+    https://expressjs.com/en/starter/static-files.html
+
+    https://www.youtube.com/watch?v=7H_QH9nipNs&t=2878s&ab_channel=CodeWithHarry 
+
+
+*
+* Name: Aanand Aman Student ID: 166125211 Date: 2023/02/02
+*
+* Cyclic Web App URL: ________________________________________________________
+*
+* GitHub Repository URL: ______________________________________________________
+*
+********************************************************************************/ 
 
 
 const express = require("express");
@@ -69,13 +90,13 @@ app.get("/posts", (req, res) => {
  })
 
 
+//Error 404 Page
 app.use((req, res) => {
   res.status(404).send("Sorry, Page Not Found");
 });
 
 
 // setup http server to listen on HTTP_PORT
-
 blog.initialize().then(() => {
   app.listen(HTTP_PORT, onHttpStart);
 })
