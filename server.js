@@ -3,15 +3,15 @@
 
 const express = require("express");
 const app = express();
+const path = require("path");
+const blog= require("./blog-service.js");
 
 
 const HTTP_PORT = process.env.PORT || 8080;
 
-const path = require("path");
 
 app.use(express.static('public')); 
 
-const blog= require("./blog-service.js");
 
 
 // call this function after the http server starts listening for requests
