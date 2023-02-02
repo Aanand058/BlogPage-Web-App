@@ -71,7 +71,7 @@ function getAllPosts() {
 function getPublishedPosts() {
     return new Promise((resolve, reject) => {
         posts.forEach((post) => {
-            if (post.publishedPosts === true) {
+            if (post.published === true) {
                 publishedPosts.push(post);
             }
         })
