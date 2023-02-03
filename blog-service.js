@@ -25,7 +25,7 @@
 const fs = require("fs");
 const path = require("path");
 
-//Global Variables 
+//Global Variables holding json data
 let posts = [];
 let categories = [];
 let publishedPosts = [];
@@ -37,7 +37,7 @@ function initialize() {
 
     return new Promise((resolve, reject) => {
         //reading the posts.json 
-        fs.readFile(path.join(__dirname + "/data/posts.json"), 'utf8', (err, data) => {
+        fs.readFile(path.join(__dirname , "/data/posts.json"), 'utf8', (err, data) => {
             if (err) { reject("Unable to read file"); }
 
             posts = JSON.parse(data);
@@ -46,7 +46,7 @@ function initialize() {
 
 
         //reading the categories.json
-        fs.readFile(path.join(__dirname + "/data/categories.json"), 'utf8', (err, data) => {
+        fs.readFile(path.join(__dirname , "/data/categories.json"), 'utf8', (err, data) => {
             if (err) { reject("Unable to read file"); }
 
             categories = JSON.parse(data);
@@ -70,11 +70,9 @@ function getAllPosts() {
 
 function getPublishedPosts() {
     return new Promise((resolve, reject) => {
-        posts.forEach((post) => {
-            if (post.published === true) {
-                publishedPosts.push(post);
-            }
-        })
+       
+        const publishedPosts = posts.filter(post => post.published === true);
+        
         if (publishedPosts.length === 0) {
             reject("no results returned"
             );
