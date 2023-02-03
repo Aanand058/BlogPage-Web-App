@@ -48,7 +48,7 @@ app.get("/", (req, res) => {
   res.redirect("/about");
 });
 
-
+//About page
 app.get("/about", (req, res) => {
   res.sendFile(path.join(__dirname, "/views/about.html"));
 });
@@ -92,11 +92,11 @@ app.get("/posts", (req, res) => {
 
 
 //Error 404 Page
-
 app.get("/error",(req, res) => {
 
   res.redirect('/error1');
-}); app.get('/error1', (req, res) => {
+}); 
+app.get('/error1', (req, res) => {
   res.sendFile(__dirname + "/views/error.jpg");
 });
 
