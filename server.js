@@ -21,7 +21,7 @@
 *
 * GitHub Repository URL: ______________________________________________________
 *
-********************************************************************************/ 
+********************************************************************************/
 
 
 const express = require("express");
@@ -50,50 +50,50 @@ app.get("/", (req, res) => {
 
 
 app.get("/about", (req, res) => {
-  res.sendFile(path.join(__dirname , "/views/about.html"));
+  res.sendFile(path.join(__dirname, "/views/about.html"));
 });
 
 
 //  Blog Page 
 app.get("/blog", (req, res) => {
   blog.getPublishedPosts()
-  .then((data)=>{
-    res.send({data})
-  })
-  .catch((err)=>{
-    res.send(err)
-  });
- 
+    .then((data) => {
+      res.send({ data })
+    })
+    .catch((err) => {
+      res.send(err)
+    });
+
 })
 
 
 
 //Cateories Page
 app.get("/categories", (req, res) => {
-  blog.getCategories().then((data)=>{
-    res.send({data})
+  blog.getCategories().then((data) => {
+    res.send({ data })
   })
-  .catch((err)=>{
-    res.send(err)
-  });
+    .catch((err) => {
+      res.send(err)
+    });
 })
 
 
 
 //Posts page
-app.get("/posts", (req, res) => { 
-  blog.getAllPosts().then((data)=>{
-    res.send({data})
+app.get("/posts", (req, res) => {
+  blog.getAllPosts().then((data) => {
+    res.send({ data })
   })
-  .catch((err)=>{
-    res.send(err)
-  });
- })
+    .catch((err) => {
+      res.send(err)
+    });
+})
 
 
 //Error 404 Page
-app.use((req, res) => {
-  res.status(404).sendFile(path.join(__dirname , "/views/about.html"));
+app.get("/error",(req, res) => {
+  res.status(404).sendFile(path.join(__dirname, "/views/about.html"));
 });
 
 
