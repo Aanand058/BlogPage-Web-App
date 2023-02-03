@@ -11,6 +11,8 @@
 
     https://www.youtube.com/watch?v=7H_QH9nipNs&t=2878s&ab_channel=CodeWithHarry 
 
+    https://www.freepik.com/free-vector/hand-drawn-404-error_1587422.htm#query=404%20not%20found&position=3&from_view=keyword 
+
 
 *
 * Name: Aanand Aman Student ID: 166125211 Date: 2023/02/02
@@ -48,9 +50,13 @@ app.get("/", (req, res) => {
   res.redirect("/about");
 });
 
+// app.get("/about", (req, res) => {
+//   res.sendFile(path.join(__dirname, "views", "about.html"));
+// })
+
 app.get("/about", (req, res) => {
-  res.sendFile(path.join(__dirname, "views", "about.html"));
-})
+  res.sendFile(path.join(__dirname + "/views/about.html"));
+});
 
 
 //  Blog Page 
@@ -92,7 +98,7 @@ app.get("/posts", (req, res) => {
 
 //Error 404 Page
 app.use((req, res) => {
-  res.status(404).send("Sorry, Page Not Found");
+  res.status(404).sendFile(path.join(__dirname  + "/views/about.html"));
 });
 
 
