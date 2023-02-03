@@ -17,7 +17,7 @@
 *
 * Name: Aanand Aman Student ID: 166125211 Date: 2023/02/02
 *
-* Cyclic Web App URL: ________________________________________________________
+* Cyclic Web App URL: https://drab-ruby-caterpillar-tux.cyclic.app/about
 *
 * GitHub Repository URL: ______________________________________________________
 *
