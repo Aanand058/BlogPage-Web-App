@@ -92,8 +92,12 @@ app.get("/posts", (req, res) => {
 
 
 //Error 404 Page
+
 app.get("/error",(req, res) => {
-  res.status(404).sendFile(path.join(__dirname, "/views/errorPage.html"));
+
+  res.redirect('/error1');
+}); app.get('/error1', (req, res) => {
+  res.sendFile(__dirname + "/views/error.jpg");
 });
 
 
