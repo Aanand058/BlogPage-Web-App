@@ -13,11 +13,11 @@
 
 
 *
-* Name: Aanand Aman Student ID: 166125211 Date: 2023/02/02
+* Name: Aanand Aman Student ID: 166125211 Date: 2023/02/03
 *
-* Cyclic Web App URL: ________________________________________________________
+* Cyclic Web App URL: https://drab-ruby-caterpillar-tux.cyclic.app/about
 *
-* GitHub Repository URL: ______________________________________________________
+* GitHub Repository URL: https://github.com/Aanand058/web322-app
 *
 ********************************************************************************/
 
@@ -25,10 +25,10 @@
 const fs = require("fs");
 const path = require("path");
 
-//Global Variables holding json data
-let posts = [];
-let categories = [];
-let publishedPosts = [];
+//Global arrays holding json data
+var posts = [];
+var categories = [];
+
 
 
 

@@ -7,7 +7,7 @@
 
     For better implementation and understanding I took reference from these sites:
 
-    https://expressjs.com/en/starter/static-files.html
+    https://expressjs.com
 
     https://www.youtube.com/watch?v=7H_QH9nipNs&t=2878s&ab_channel=CodeWithHarry 
 
@@ -15,11 +15,11 @@
 
 
 *
-* Name: Aanand Aman Student ID: 166125211 Date: 2023/02/02
+* Name: Aanand Aman Student ID: 166125211     Date: 2023/02/03
 *
 * Cyclic Web App URL: https://drab-ruby-caterpillar-tux.cyclic.app/about
 *
-* GitHub Repository URL: ______________________________________________________
+* GitHub Repository URL: https://github.com/Aanand058/web322-app
 *
 ********************************************************************************/
 
@@ -92,10 +92,10 @@ app.get("/posts", (req, res) => {
 
 
 //Error 404 Page
-app.get("/error",(req, res) => {
+app.get("/error", (req, res) => {
 
   res.redirect('/error1');
-}); 
+});
 app.get('/error1', (req, res) => {
   res.sendFile(__dirname + "/views/error.jpg");
 });
