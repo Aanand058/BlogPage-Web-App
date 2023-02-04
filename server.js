@@ -101,7 +101,7 @@ app.get('/error1', (req, res) => {
 });
 
 
-// setup http server to listen on HTTP_PORT
+// setup http server to listen on HTTP_PORT with initialize() method
 blog.initialize().then(() => {
   app.listen(HTTP_PORT, onHttpStart);
 })
