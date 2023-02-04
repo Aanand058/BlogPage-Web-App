@@ -97,7 +97,7 @@ app.get("/error", (req, res) => {
   res.redirect('/error1');
 });
 app.get('/error1', (req, res) => {
-  res.sendFile(__dirname + "/views/error.jpg");
+  res.status(404).sendFile(__dirname + "/views/error.jpg");
 });
 
 
