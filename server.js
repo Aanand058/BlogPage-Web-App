@@ -92,13 +92,16 @@ app.get("/posts", (req, res) => {
 
 
 //Error 404 Page
-app.get("/error", (req, res) => {
 
-  res.redirect('/error1');
+//Updated this part after class lec on feb 07 
+app.use((req, res) => {
+
+ // res.redirect('/error1');
+   res.status(404).sendFile(__dirname + "/views/error.jpg");
 });
-app.get('/error1', (req, res) => {
-  res.status(404).sendFile(__dirname + "/views/error.jpg");
-});
+// app.get('/error1', (req, res) => {
+//   res.status(404).sendFile(__dirname + "/views/error.jpg");
+// });
 
 
 // setup http server to listen on HTTP_PORT with initialize() method
