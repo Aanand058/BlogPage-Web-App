@@ -23,6 +23,7 @@
 
 
 const fs = require("fs");
+const { resolve } = require("path");
 const path = require("path");
 
 //Global arrays holding json data
@@ -37,7 +38,7 @@ function initialize() {
 
     return new Promise((resolve, reject) => {
         //reading the posts.json 
-        fs.readFile(path.join(__dirname , "/data/posts.json"), 'utf8', (err, data) => {
+        fs.readFile(path.join(__dirname, "/data/posts.json"), 'utf8', (err, data) => {
             if (err) { reject("Unable to read file"); }
 
             posts = JSON.parse(data);
@@ -46,7 +47,7 @@ function initialize() {
 
 
         //reading the categories.json
-        fs.readFile(path.join(__dirname , "/data/categories.json"), 'utf8', (err, data) => {
+        fs.readFile(path.join(__dirname, "/data/categories.json"), 'utf8', (err, data) => {
             if (err) { reject("Unable to read file"); }
 
             categories = JSON.parse(data);
@@ -70,9 +71,9 @@ function getAllPosts() {
 
 function getPublishedPosts() {
     return new Promise((resolve, reject) => {
-       
+
         const publishedPosts = posts.filter(post => post.published === true);
-        
+
         if (publishedPosts.length === 0) {
             reject("no results returned"
             );
@@ -95,4 +96,20 @@ function getCategories() {
 }
 
 
-module.exports = { initialize, getPublishedPosts, getAllPosts, getCategories };
+//Work A3
+function addPost(postData) {
+    return new Promise((resolve, reject) => {
+        if (postData.published === undefined) {
+            postData.published = false;
+
+        } else { postData.published = true; }
+
+        postData.id = posts.length +1;
+
+        posts.push(postData);
+        resolve(postData);
+    })
+
+}
+
+module.exports = { initialize, getPublishedPosts, getAllPosts, getCategories, addPost };

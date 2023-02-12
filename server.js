@@ -29,13 +29,28 @@ const app = express();
 const path = require("path");
 const blog = require("./blog-service.js");
 
+//Additional work for A3
+const multer = require("multer");
+const cloudinary = require('cloudinary').v2;
+const streamifier = require('streamifier');
 
+
+//Cloudinary Config
+cloudinary.config({
+  cloud_name: "djrbzdre4",
+  api_key: "838424883527942",
+  api_secret: "TAPjsXQmU5wXg9kd7w3HqyMMQgQ",
+  secure: true,
+});
+
+//Upload Variable
+const upload = multer(); // no { storage: storage } since we are not using disk storage
+
+
+
+//Port Config
 const HTTP_PORT = process.env.PORT || 8080;
-
-
 app.use(express.static('public'));
-
-
 
 // call this function after the http server starts listening for requests
 function onHttpStart() {
@@ -88,16 +103,60 @@ app.get("/posts", (req, res) => {
     .catch((err) => {
       res.send(err)
     });
+
+
 })
 
 
-//Error 404 Page
+//Add post page redirect
+app.get("/posts/add", (req, res) => {
+  res.sendFile(path.join(__dirname, "/views/addPost.html"));
+});
 
+
+//Add post POST 
+app.post("/posts/add", upload.single("featureImage"), (req, res) => {
+  if (req.file) {
+    let streamUpload = (req) => {
+      return new Promise((resolve, reject) => {
+        let stream = cloudinary.uploader.upload_stream(
+          (error, result) => {
+            if (result) {
+              resolve(result);
+            } else {
+              reject(error);
+            }
+          }
+        );
+        streamifier.createReadStream(req.file.buffer).pipe(stream);
+      });
+    };
+    async function upload(req) {
+      let result = await streamUpload(req);
+      console.log(result);
+      return result;
+    }
+    upload(req).then((uploaded) => {
+      processPost(uploaded.url);
+    });
+  } else {
+    processPost("");
+  }
+  function processPost(imageUrl) {
+    req.body.featureImage = imageUrl;
+    blog.addPost(req.body)
+    .then(post => res.redirect("/posts"))
+    .catch(err => res.status(500).send(err))
+    
+  }
+});
+
+//Error 404 Page
 //Updated this part after class lec on feb 07 
 app.use((req, res) => {
 
- // res.redirect('/error1');
-   res.status(404).sendFile(__dirname + "/views/error.jpg");
+  // res.redirect('/error1');
+  res.status(404).sendFile(__dirname + "/views/error.jpg");
 });
 // app.get('/error1', (req, res) => {
 //   res.status(404).sendFile(__dirname + "/views/error.jpg");
