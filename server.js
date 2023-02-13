@@ -95,16 +95,44 @@ app.get("/categories", (req, res) => {
 
 
 
-//Posts page
+//Posts page (Updated A3)
 app.get("/posts", (req, res) => {
-  blog.getAllPosts().then((data) => {
-    res.send({ data })
-  })
-    .catch((err) => {
-      res.send(err)
-    });
+ 
 
+  if (req.query.category) {
+    blog.getPostsByCategory(req.query.category)
+      .then((data) => {
+        res.send(data);
+      })
+      .catch((err) => {
+        res.send(err);
+      });
+  } else if (req.query.minDate) {
+    blog.getPostsByMinDate(req.query.minDate)
+      .then((data) => {
+        res.send(data);
+      })
+      .catch((err) => {
+        res.send(err);
+      });
+  } else {
+    blog.getAllPosts()
+      .then((data) => {
+        res.send(data);
+      })
+      .catch((err) => {
+        res.send(err);
+      });
+  }
+});
 
+//getPostbyid
+app.get("/post/:value", (req,res)=>{
+  blog.getPostById(req.params.value)
+  .then((data)=>{res.send(data)})
+  .catch((err)=>{
+    res.send(err);
+  });
 })
 
 
@@ -145,9 +173,9 @@ app.post("/posts/add", upload.single("featureImage"), (req, res) => {
   function processPost(imageUrl) {
     req.body.featureImage = imageUrl;
     blog.addPost(req.body)
-    .then(post => res.redirect("/posts"))
-    .catch(err => res.status(500).send(err))
-    
+      .then(post => res.redirect("/posts"))
+      .catch(err => res.status(500).send(err))
+
   }
 });
 

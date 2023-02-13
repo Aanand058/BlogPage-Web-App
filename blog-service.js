@@ -104,12 +104,52 @@ function addPost(postData) {
 
         } else { postData.published = true; }
 
-        postData.id = posts.length +1;
+        postData.id = posts.length + 1;
 
         posts.push(postData);
         resolve(postData);
     })
+}
+
+
+function getPostsByCategory(category) {
+    return new Promise((resolve, reject) => {
+        const match = posts.filter(post => post.category == category);
+
+        if (match.length == 0) {
+            reject("No results returned");
+        } else {
+            resolve(match);
+        }
+
+    });
 
 }
 
-module.exports = { initialize, getPublishedPosts, getAllPosts, getCategories, addPost };
+
+function getPostsByMinDate(minDateStr) {
+    return new Promise((resolve, reject) => {
+        const inputDate = posts.filter(post => new Date(post.postDate) >= new Date(minDateStr))
+
+        if (inputDate.length == 0) {
+            reject("No results returned");
+        } else {
+            resolve(inputDate);
+        }
+    });
+
+}
+
+function getPostById(id) {
+    return new Promise((resolve, reject) => {
+        const idValue = posts.find(post => post.id == id);
+        if (idValue) {
+            resolve(idValue);
+        }
+        else {
+            reject("No result returned");
+        }
+    });
+}
+
+module.exports = { initialize, getPublishedPosts, getAllPosts, getCategories, addPost, getPostsByCategory, getPostsByMinDate, getPostById };
