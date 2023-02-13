@@ -143,6 +143,7 @@ function getPostsByMinDate(minDateStr) {
 function getPostById(id) {
     return new Promise((resolve, reject) => {
         const idValue = posts.find(post => post.id == id);
+        
         if (idValue) {
             resolve(idValue);
         }
