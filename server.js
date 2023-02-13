@@ -167,7 +167,7 @@ app.post("/posts/add", upload.single("featureImage"), (req, res, next) => {
     req.body.featureImage = imageUrl;
     blog.addPost(req.body)
       .then(post => res.redirect("/posts"))
-      .catch(err => res.status(500).send(err))
+      .catch(err => res.status(404).send(err))
 
   }
 });
