@@ -91,8 +91,7 @@ app.get("/categories", (req, res) => {
 //Posts page (Updated A3)
 app.get("/posts", (req, res) => {
 
-
-  if (req.query.category) {
+  if (req.query.category) {                   //  /posts?catetogry=5
     blog.getPostsByCategory(req.query.category)
       .then((data) => {
         res.send(data);
@@ -100,7 +99,7 @@ app.get("/posts", (req, res) => {
       .catch((err) => {
         res.send(err);
       });
-  } else if (req.query.minDate) {
+  } else if (req.query.minDate) {              //  /posts?minDate=2020-12-01
     blog.getPostsByMinDate(req.query.minDate)
       .then((data) => {
         res.send(data);
@@ -119,10 +118,12 @@ app.get("/posts", (req, res) => {
   }
 });
 
-//getPostbyid
+//getPostbyid                           //  /post/3
 app.get("/post/:value", (req, res) => {
   blog.getPostById(req.params.value)
-    .then((data) => { res.send(data) })
+    .then((data) => { 
+      res.send(data) 
+    })
     .catch((err) => {
       res.send(err);
     });
@@ -167,7 +168,7 @@ app.post("/posts/add", upload.single("featureImage"), (req, res, next) => {
     req.body.featureImage = imageUrl;
     blog.addPost(req.body)
       .then(post => res.redirect("/posts"))
-      .catch(err => res.status(404).send(err))
+      .catch(err =>  res.status(404).sendFile(__dirname + "/views/error.jpg"))
 
   }
 });
@@ -175,13 +176,9 @@ app.post("/posts/add", upload.single("featureImage"), (req, res, next) => {
 //Error 404 Page
 //Updated this part after class lec on feb 07 
 app.use((req, res) => {
-
-  // res.redirect('/error1');
   res.status(404).sendFile(__dirname + "/views/error.jpg");
 });
-// app.get('/error1', (req, res) => {
-//   res.status(404).sendFile(__dirname + "/views/error.jpg");
-// });
+
 
 
 // setup http server to listen on HTTP_PORT with initialize() method
