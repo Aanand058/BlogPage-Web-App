@@ -1,19 +1,14 @@
 /*********************************************************************************
-* WEB322 – Assignment 02
+* WEB322 – Assignment 03
 * I declare that this assignment is my own work in accordance with Seneca Academic Policy. No part
 * of this assignment has been copied manually or electronically from any other source
 * (including 3rd party web sites) or distributed to other students.
 
-
-    For better implementation and understanding I took reference from these sites:
-
-    https://expressjs.com/en/starter/static-files.html
-
-    https://www.youtube.com/watch?v=7H_QH9nipNs&t=2878s&ab_channel=CodeWithHarry 
-
-
+References: https://pressbooks.senecacollege.ca/web322/chapter/backend-core-development-node-js-express-module/
+https://web322.ca/notes/week05 
+https://cloudinary.com/blog/node_js_file_upload_to_a_local_server_or_to_the_cloud 
 *
-* Name: Aanand Aman Student ID: 166125211 Date: 2023/02/03
+* Name: Aanand Aman Student ID: 166125211     Date: 2023/02/15
 *
 * Cyclic Web App URL: https://drab-ruby-caterpillar-tux.cyclic.app/about
 *
@@ -96,7 +91,7 @@ function getCategories() {
 }
 
 
-//Work A3
+//****************Work A3 ***************************************
 function addPost(postData) {
     return new Promise((resolve, reject) => {
         if (postData.published === undefined) {

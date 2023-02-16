@@ -8,7 +8,7 @@ References: https://pressbooks.senecacollege.ca/web322/chapter/backend-core-deve
 https://web322.ca/notes/week05 
 https://cloudinary.com/blog/node_js_file_upload_to_a_local_server_or_to_the_cloud 
 *
-* Name: Aanand Aman Student ID: 166125211     Date: 2023/02/12
+* Name: Aanand Aman Student ID: 166125211     Date: 2023/02/15
 *
 * Cyclic Web App URL: https://drab-ruby-caterpillar-tux.cyclic.app/about
 *
@@ -90,7 +90,7 @@ app.get("/categories", (req, res) => {
 
 //Posts page (Updated A3)
 app.get("/posts", (req, res) => {
- 
+
 
   if (req.query.category) {
     blog.getPostsByCategory(req.query.category)
@@ -120,12 +120,12 @@ app.get("/posts", (req, res) => {
 });
 
 //getPostbyid
-app.get("/post/:value", (req,res)=>{
+app.get("/post/:value", (req, res) => {
   blog.getPostById(req.params.value)
-  .then((data)=>{res.send(data)})
-  .catch((err)=>{
-    res.send(err);
-  });
+    .then((data) => { res.send(data) })
+    .catch((err) => {
+      res.send(err);
+    });
 })
 
 
