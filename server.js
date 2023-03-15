@@ -1,5 +1,5 @@
 /*********************************************************************************
-* WEB322 – Assignment 03
+* WEB322 – Assignment 04
 * I declare that this assignment is my own work in accordance with Seneca Academic Policy. No part
 * of this assignment has been copied manually or electronically from any other source
 * (including 3rd party web sites) or distributed to other students.
@@ -8,7 +8,7 @@ References: https://pressbooks.senecacollege.ca/web322/chapter/backend-core-deve
 https://web322.ca/notes/week05 
 https://cloudinary.com/blog/node_js_file_upload_to_a_local_server_or_to_the_cloud 
 *
-* Name: Aanand Aman Student ID: 166125211     Date: 2023/02/16ss
+* Name: Aanand Aman Student ID: 166125211     Date: 2023/03/14
 *
 * Cyclic Web App URL: https://drab-ruby-caterpillar-tux.cyclic.app/about
 *
@@ -26,6 +26,44 @@ const blog = require("./blog-service.js");
 const multer = require("multer");
 const cloudinary = require('cloudinary').v2;
 const streamifier = require('streamifier');
+
+
+//Additional work for A4
+const exphbs = require('express-handlebars');
+
+// Register handlebars as the rendering engine for views
+app.engine('.hbs', exphbs.engine({ extname: '.hbs' }));
+app.set('view engine', '.hbs');
+
+//This will add the property "activeRoute" to "app.locals" whenever the route changes,
+app.use(function (req, res, next) {
+  let route = req.path.substring(1);
+  app.locals.activeRoute = "/" + (isNaN(route.split('/')[1]) ? route.replace(/\/(?!.*)/, "") : route.replace(/\/(.*)/, ""));
+  app.locals.viewingCategory = req.query.category;
+  next();
+});
+
+
+//Helper 
+app.engine('.hbs', exphbs.engine({
+  extname: '.hbs',
+  helpers: {
+    navLink: function (url, options) {
+      return '<li' +
+        ((url == app.locals.activeRoute) ? ' class="active" ' : '') +
+        '><a href="' + url + '">' + options.fn(this) + '</a></li>';
+    },
+    equal: function (lvalue, rvalue, options) {
+      if (arguments.length < 3)
+        throw new Error("Handlebars Helper equal needs 2 parameters");
+      if (lvalue != rvalue) {
+        return options.inverse(this);
+      } else {
+        return options.fn(this);
+      }
+    }
+  }
+}));
 
 
 //Cloudinary Config
@@ -53,8 +91,9 @@ function onHttpStart() {
 
 //About redirect 
 app.get("/", (req, res) => {
-  res.redirect("/about");
+  res.render("about");
 });
+
 
 //About page
 app.get("/about", (req, res) => {
@@ -88,41 +127,40 @@ app.get("/categories", (req, res) => {
 
 
 
-//Posts page (Updated A3)
-app.get("/posts", (req, res) => {
+//Posts page (Updated A4)
+//  /posts?catetogry=5
+//  /posts?minDate=2020-12-01 
 
-  if (req.query.category) {                   //  /posts?catetogry=5
+app.get("/posts", (req, res) => {
+  if (req.query.category) {
     blog.getPostsByCategory(req.query.category)
-      .then((data) => {
-        res.send(data);
-      })
-      .catch((err) => {
-        res.send(err);
-      });
-  } else if (req.query.minDate) {              //  /posts?minDate=2020-12-01
+      .then((data) => res.render("posts", { posts: data }))
+      .catch((err) => res.render("posts", { message: "No results" }));
+  }
+
+  else if (req.query.minDate) {
     blog.getPostsByMinDate(req.query.minDate)
-      .then((data) => {
-        res.send(data);
-      })
-      .catch((err) => {
-        res.send(err);
-      });
-  } else {
+      .then((data) => res.render("posts", { posts: data }))
+      .catch((err) => res.render("posts", { message:  "No results" }));
+  }
+
+  else {
     blog.getAllPosts()
-      .then((data) => {
-        res.send(data);
-      })
-      .catch((err) => {
-        res.send(err);
-      });
+      .then((data) => res.render("posts", { posts: data }))
+      .catch((err) => res.render("posts", { message:  "No results" }));
   }
 });
+
+
+
+
+
 
 //getPostbyid                           //  /post/3
 app.get("/post/:value", (req, res) => {
   blog.getPostById(req.params.value)
-    .then((data) => { 
-      res.send(data) 
+    .then((data) => {
+      res.send(data)
     })
     .catch((err) => {
       res.send(err);
@@ -132,7 +170,7 @@ app.get("/post/:value", (req, res) => {
 
 //Add post page redirect
 app.get("/posts/add", (req, res) => {
-  res.sendFile(path.join(__dirname, "/views/addPost.html"));
+  res.render("addPost");
 });
 
 
@@ -168,7 +206,7 @@ app.post("/posts/add", upload.single("featureImage"), (req, res, next) => {
     req.body.featureImage = imageUrl;
     blog.addPost(req.body)
       .then(post => res.redirect("/posts"))
-      .catch(err =>  res.status(404).sendFile(__dirname + "/views/error.jpg"))
+      .catch(err => res.status(404).sendFile(__dirname + "/views/error.jpg"))
 
   }
 });
