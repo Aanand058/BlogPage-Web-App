@@ -11,7 +11,7 @@ https://codepen.io/ckroll17/pen/MzWgLo (404.hbs)
 *
 * Name: Aanand Aman Student ID: 166125211     Date: 2023/03/15
 *
-* Cyclic Web App URL: https://drab-ruby-caterpillar-tux.cyclic.app/about
+* Cyclic Web App URL: https://drab-ruby-caterpillar-tux.cyclic.app/
 *
 * GitHub Repository URL: https://github.com/Aanand058/web322-app
 *
