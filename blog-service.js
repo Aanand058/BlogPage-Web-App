@@ -1,5 +1,5 @@
 /*********************************************************************************
-* WEB322 – Assignment 03
+* WEB322 – Assignment 04
 * I declare that this assignment is my own work in accordance with Seneca Academic Policy. No part
 * of this assignment has been copied manually or electronically from any other source
 * (including 3rd party web sites) or distributed to other students.
@@ -10,8 +10,7 @@ https://cloudinary.com/blog/node_js_file_upload_to_a_local_server_or_to_the_clou
 *
 * Name: Aanand Aman Student ID: 166125211     Date: 2023/02/15
 *
-* Cyclic Web App URL: https://drab-ruby-caterpillar-tux.cyclic.app/about
-*
+* Cyclic Web App URL: https://drab-ruby-caterpillar-tux.cyclic.app/
 * GitHub Repository URL: https://github.com/Aanand058/web322-app
 *
 ********************************************************************************/
