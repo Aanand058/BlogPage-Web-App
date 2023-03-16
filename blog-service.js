@@ -5,7 +5,7 @@
 * (including 3rd party web sites) or distributed to other students.
 
 References: https://pressbooks.senecacollege.ca/web322/chapter/backend-core-development-node-js-express-module/
-https://web322.ca/notes/week05 
+https://web322.ca/notes/week06
 https://cloudinary.com/blog/node_js_file_upload_to_a_local_server_or_to_the_cloud 
 *
 * Name: Aanand Aman Student ID: 166125211     Date: 2023/02/15
@@ -146,8 +146,6 @@ function getPostById(id) {
         }
     });
 }
-
-
 
 
 //**************** Work A4 ***************************************

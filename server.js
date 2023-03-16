@@ -175,7 +175,7 @@ app.get("/categories", (req, res) => {
 //  /posts?catetogry=5
 //  /posts?minDate=2020-12-01 
 
-app.get("/posts", (req, res) => {    //Update needed
+app.get("/posts", (req, res) => {    
   if (req.query.category) {
     blog.getPostsByCategory(req.query.category)
       .then((data) => 
