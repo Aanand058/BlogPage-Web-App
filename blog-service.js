@@ -92,7 +92,7 @@ function getCategories() {
 
 
 //****************Work A3 ***************************************
-function addPost(postData) {
+function addPost(postData) {     //Updated for A4
     return new Promise((resolve, reject) => {
         if (postData.published === undefined) {
             postData.published = false;
@@ -100,7 +100,7 @@ function addPost(postData) {
         } else { postData.published = true; }
 
         postData.id = posts.length + 1;
-
+        postData.postDate = new Date().toISOString().slice(0,10);
         posts.push(postData);
         resolve(postData);
     })
@@ -138,7 +138,7 @@ function getPostsByMinDate(minDateStr) {
 function getPostById(id) {
     return new Promise((resolve, reject) => {
         const idValue = posts.find(post => post.id == id);
-        
+
         if (idValue) {
             resolve(idValue);
         }
@@ -148,4 +148,22 @@ function getPostById(id) {
     });
 }
 
-module.exports = { initialize, getPublishedPosts, getAllPosts, getCategories, addPost, getPostsByCategory, getPostsByMinDate, getPostById };
+
+
+
+//**************** Work A4 ***************************************
+function getPublishedPostsByCategory(category) {
+    return new Promise((resolve, reject) => {
+        const categoryId = parseInt(category);
+
+        const publishedPostsByCategory = posts.filter(post => post.published === true && post.category === categoryId);
+
+        if (publishedPostsByCategory.length > 0) {
+            resolve(publishedPostsByCategory);
+        }
+        else { reject("no results returned"); }
+    });
+}
+
+
+module.exports = { initialize, getPublishedPosts,getPublishedPostsByCategory, getAllPosts, getCategories, addPost, getPostsByCategory, getPostsByMinDate, getPostById };

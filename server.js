@@ -5,10 +5,11 @@
 * (including 3rd party web sites) or distributed to other students.
 
 References: https://pressbooks.senecacollege.ca/web322/chapter/backend-core-development-node-js-express-module/
-https://web322.ca/notes/week05 
+https://web322.ca/notes/week06
 https://cloudinary.com/blog/node_js_file_upload_to_a_local_server_or_to_the_cloud 
+https://codepen.io/ckroll17/pen/MzWgLo (404.hbs)
 *
-* Name: Aanand Aman Student ID: 166125211     Date: 2023/03/14
+* Name: Aanand Aman Student ID: 166125211     Date: 2023/03/15
 *
 * Cyclic Web App URL: https://drab-ruby-caterpillar-tux.cyclic.app/about
 *
@@ -30,6 +31,10 @@ const streamifier = require('streamifier');
 
 //Additional work for A4
 const exphbs = require('express-handlebars');
+const stripJs = require('strip-js');
+
+
+
 
 // Register handlebars as the rendering engine for views
 app.engine('.hbs', exphbs.engine({ extname: '.hbs' }));
@@ -61,9 +66,14 @@ app.engine('.hbs', exphbs.engine({
       } else {
         return options.fn(this);
       }
+    },
+    safeHTML: function (context) {
+      return stripJs(context);
     }
+
   }
 }));
+
 
 
 //Cloudinary Config
@@ -91,38 +101,72 @@ function onHttpStart() {
 
 //About redirect 
 app.get("/", (req, res) => {
-  res.render("about");
+  res.redirect("/blog");
 });
 
 
 //About page
 app.get("/about", (req, res) => {
-  res.sendFile(path.join(__dirname, "/views/about.html"));
+  res.render("about");
 });
 
 
-//  Blog Page 
-app.get("/blog", (req, res) => {
-  blog.getPublishedPosts()
-    .then((data) => {
-      res.send({ data })
-    })
-    .catch((err) => {
-      res.send(err)
-    });
+//  Blog Page Updated for A4
+app.get('/blog', async (req, res) => {
 
-})
+  // Declare an object to store properties for the view
+  let viewData = {};
+
+  try {
+
+    // declare empty array to hold "post" objects
+    let posts = [];
+
+    // if there's a "category" query, filter the returned posts by category
+    if (req.query.category) {
+      // Obtain the published "posts" by category
+      posts = await blog.getPublishedPostsByCategory(req.query.category);
+    } else {
+      // Obtain the published "posts"
+      posts = await blog.getPublishedPosts();
+    }
+
+    // sort the published posts by postDate
+    posts.sort((a, b) => new Date(b.postDate) - new Date(a.postDate));
+
+    // get the latest post from the front of the list (element 0)
+    let post = posts[0];
+
+    // store the "posts" and "post" data in the viewData object (to be passed to the view)
+    viewData.posts = posts;
+    viewData.post = post;
+
+  } catch (err) {
+    viewData.message = "no results";
+  }
+
+  try {
+    // Obtain the full list of "categories"
+    let categories = await blog.getCategories();
+
+    // store the "categories" data in the viewData object (to be passed to the view)
+    viewData.categories = categories;
+  } catch (err) {
+    viewData.categoriesMessage = "no results"
+  }
+
+  // render the "blog" view with all of the data (viewData)
+  res.render("blog", { data: viewData })
+
+});
 
 
 
 //Cateories Page
 app.get("/categories", (req, res) => {
-  blog.getCategories().then((data) => {
-    res.send({ data })
-  })
-    .catch((err) => {
-      res.send(err)
-    });
+  blog.getCategories()
+    .then((data) => res.render("categories", { categories: data }))
+    .catch((err) => res.render("categories", { message: "no results" }))
 })
 
 
@@ -131,7 +175,7 @@ app.get("/categories", (req, res) => {
 //  /posts?catetogry=5
 //  /posts?minDate=2020-12-01 
 
-app.get("/posts", (req, res) => {
+app.get("/posts", (req, res) => {    //Update needed
   if (req.query.category) {
     blog.getPostsByCategory(req.query.category)
       .then((data) => res.render("posts", { posts: data }))
@@ -141,13 +185,13 @@ app.get("/posts", (req, res) => {
   else if (req.query.minDate) {
     blog.getPostsByMinDate(req.query.minDate)
       .then((data) => res.render("posts", { posts: data }))
-      .catch((err) => res.render("posts", { message:  "No results" }));
+      .catch((err) => res.render("posts", { message: "No results" }));
   }
 
   else {
     blog.getAllPosts()
       .then((data) => res.render("posts", { posts: data }))
-      .catch((err) => res.render("posts", { message:  "No results" }));
+      .catch((err) => res.render("posts", { message: "No results" }));
   }
 });
 
@@ -166,6 +210,57 @@ app.get("/post/:value", (req, res) => {
       res.send(err);
     });
 })
+
+app.get('/blog/:id', async (req, res) => {
+
+  // Declare an object to store properties for the view
+  let viewData = {};
+
+  try {
+
+    // declare empty array to hold "post" objects
+    let posts = [];
+
+    // if there's a "category" query, filter the returned posts by category
+    if (req.query.category) {
+      // Obtain the published "posts" by category
+      posts = await blog.getPublishedPostsByCategory(req.query.category);
+    } else {
+      // Obtain the published "posts"
+      posts = await blog.getPublishedPosts();
+    }
+
+    // sort the published posts by postDate
+    posts.sort((a, b) => new Date(b.postDate) - new Date(a.postDate));
+
+    // store the "posts" and "post" data in the viewData object (to be passed to the view)
+    viewData.posts = posts;
+
+  } catch (err) {
+    viewData.message = "no results";
+  }
+
+  try {
+    // Obtain the post by "id"
+    viewData.post = await blog.getPostById(req.params.id);
+  } catch (err) {
+    viewData.message = "no results";
+  }
+
+  try {
+    // Obtain the full list of "categories"
+    let categories = await blog.getCategories();
+
+    // store the "categories" data in the viewData object (to be passed to the view)
+    viewData.categories = categories;
+  } catch (err) {
+    viewData.categoriesMessage = "no results"
+  }
+
+  // render the "blog" view with all of the data (viewData)
+  res.render("blog", { data: viewData })
+});
+
 
 
 //Add post page redirect
@@ -214,7 +309,8 @@ app.post("/posts/add", upload.single("featureImage"), (req, res, next) => {
 //Error 404 Page
 //Updated this part after class lec on feb 07 
 app.use((req, res) => {
-  res.status(404).sendFile(__dirname + "/views/error.jpg");
+  res.status(404);
+  res.render("404");
 });
 
 
