@@ -34,8 +34,6 @@ const exphbs = require('express-handlebars');
 const stripJs = require('strip-js');
 
 
-
-
 // Register handlebars as the rendering engine for views
 app.engine('.hbs', exphbs.engine({ extname: '.hbs' }));
 app.set('view engine', '.hbs');
@@ -165,8 +163,10 @@ app.get('/blog', async (req, res) => {
 //Cateories Page
 app.get("/categories", (req, res) => {
   blog.getCategories()
-    .then((data) => res.render("categories", { categories: data }))
-    .catch((err) => res.render("categories", { message: "no results" }))
+    .then((data) => 
+    res.render("categories", { categories: data }))
+    .catch((err) => 
+    res.render("categories", { message: "no results" }))
 })
 
 
@@ -178,20 +178,26 @@ app.get("/categories", (req, res) => {
 app.get("/posts", (req, res) => {    //Update needed
   if (req.query.category) {
     blog.getPostsByCategory(req.query.category)
-      .then((data) => res.render("posts", { posts: data }))
-      .catch((err) => res.render("posts", { message: "No results" }));
+      .then((data) => 
+      res.render("posts", { posts: data }))
+      .catch((err) =>
+      res.render("posts", { message: "No results" }));
   }
 
   else if (req.query.minDate) {
     blog.getPostsByMinDate(req.query.minDate)
-      .then((data) => res.render("posts", { posts: data }))
-      .catch((err) => res.render("posts", { message: "No results" }));
+      .then((data) => 
+      res.render("posts", { posts: data }))
+      .catch((err) =>
+       res.render("posts", { message: "No results" }));
   }
 
   else {
     blog.getAllPosts()
-      .then((data) => res.render("posts", { posts: data }))
-      .catch((err) => res.render("posts", { message: "No results" }));
+      .then((data) => 
+      res.render("posts", { posts: data }))
+      .catch((err) => 
+      res.render("posts", { message: "No results" }));
   }
 });
 
@@ -307,7 +313,7 @@ app.post("/posts/add", upload.single("featureImage"), (req, res, next) => {
 });
 
 //Error 404 Page
-//Updated this part after class lec on feb 07 
+//Updated for A4 (used custom HTML and CSS) 
 app.use((req, res) => {
   res.status(404);
   res.render("404");

@@ -160,7 +160,7 @@ function getPublishedPostsByCategory(category) {
         if (publishedPostsByCategory.length > 0) {
             resolve(publishedPostsByCategory);
         }
-        else { reject("no results returned"); }
+        else { reject("no results"); }
     });
 }
 
