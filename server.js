@@ -363,7 +363,7 @@ app.get("/categories/delete/:id", (req, res) => {
       res.redirect("/categories");
     })
     .catch(() => {
-      // console.log("Unable to Remove Category / Category not found");
+     
       res.status(500).send('Unable to Remove Category / Category not found');
     });
 });
@@ -377,7 +377,7 @@ app.get("/posts/delete/:id", (req, res) => {
       res.redirect("/posts");
     })
     .catch(() => {
-      //console.log("Unable to Remove Posts / Post not found");
+     
       res.status(500).send('Unable to Remove Category / Category not found');
     });
 });

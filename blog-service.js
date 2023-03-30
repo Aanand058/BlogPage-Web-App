@@ -7,6 +7,7 @@
 References: https://pressbooks.senecacollege.ca/web322/chapter/backend-core-development-node-js-express-module/
 https://web322.ca/notes/week06
 https://cloudinary.com/blog/node_js_file_upload_to_a_local_server_or_to_the_cloud 
+https://web322.ca/notes/week07 
 *
 * Name: Aanand Aman Student ID: 166125211     Date: 2023/03/29
 *
@@ -20,6 +21,7 @@ https://cloudinary.com/blog/node_js_file_upload_to_a_local_server_or_to_the_clou
 const Sequelize = require('sequelize');
 const { gte } = Sequelize.Op;
 
+// set up sequelize to point to our postgres database
 var sequelize = new Sequelize('nxqmjlfo', 'nxqmjlfo', 'RH6UrzNIF5uWU02-yEG74KyhE6hS5wCJ', {
     host: 'suleiman.db.elephantsql.com',
     dialect: 'postgres',
