@@ -1,36 +1,38 @@
 <div class="row">
     <div class="col-md-12">
-        <h2>Posts</h2>
+        <h2>Posts <a href="/posts/add" class="btn btn-success pull-right">Add Post</a></h2>
         <hr />
         <div class="table-responsive">
             <table class="table">
 
                 <thead>
-                <tr>
+                    <tr>
 
-                    <th>Post Id</th>
-                    <th>Title</th>
-                    <th>Post Date</th>
-                    <th>Category</th>
-                    <th>Published</th>
-                </tr>
+                        <th>Post Id</th>
+                        <th>Title</th>
+                        <th>Post Date</th>
+                        <th>Category</th>
+                        <th>Published</th>
+                    </tr>
                 </thead>
                 <tbody>
-                {{#each posts}}
+                    {{#each posts}}
                     <tr>
                         <td>{{this.id}}</td>
                         <td>{{this.title}}</td>
                         <td>{{this.postDate}}</td>
                         <td><a href="/posts?category={{this.category}}">{{this.category}}</a></td>
                         <td>{{this.published}}</td>
-                    </tr>
-                {{/each}}
+                        <td><a class="btn btn-danger" href="posts/delete/{{id}}">Remove</a></td>
 
-                {{#unless posts}}
-                    <tr>
-                        <td colspan="5"class="text-center"> <strong> {{message}} </strong> </td>
                     </tr>
-                {{/unless}}
+                    {{/each}}
+
+                    {{#unless posts}}
+                    <tr>
+                        <td colspan="5" class="text-center"> <strong> {{message}} </strong> </td>
+                    </tr>
+                    {{/unless}}
 
                 </tbody>
             </table>

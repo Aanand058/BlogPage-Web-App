@@ -1,5 +1,5 @@
 /*********************************************************************************
-* WEB322 – Assignment 04
+* WEB322 – Assignment 05
 * I declare that this assignment is my own work in accordance with Seneca Academic Policy. No part
 * of this assignment has been copied manually or electronically from any other source
 * (including 3rd party web sites) or distributed to other students.
@@ -9,7 +9,7 @@ https://web322.ca/notes/week06
 https://cloudinary.com/blog/node_js_file_upload_to_a_local_server_or_to_the_cloud 
 https://codepen.io/ckroll17/pen/MzWgLo (404.hbs)
 *
-* Name: Aanand Aman Student ID: 166125211     Date: 2023/03/15
+* Name: Aanand Aman Student ID: 166125211     Date: 2023/03/30
 *
 * Cyclic Web App URL: https://drab-ruby-caterpillar-tux.cyclic.app/
 *
@@ -32,6 +32,11 @@ const streamifier = require('streamifier');
 //Additional work for A4
 const exphbs = require('express-handlebars');
 const stripJs = require('strip-js');
+
+
+///Additional work for A5 (middleware)
+app.use(express.urlencoded({ extended: true }));
+
 
 
 // Register handlebars as the rendering engine for views
@@ -67,7 +72,14 @@ app.engine('.hbs', exphbs.engine({
     },
     safeHTML: function (context) {
       return stripJs(context);
+    },
+    formatDate: function (dateObj) {
+      let year = dateObj.getFullYear();
+      let month = (dateObj.getMonth() + 1).toString();
+      let day = dateObj.getDate().toString();
+      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
     }
+
 
   }
 }));
@@ -160,44 +172,48 @@ app.get('/blog', async (req, res) => {
 
 
 
-//Cateories Page
+//Cateories Page (Updated For A5)
 app.get("/categories", (req, res) => {
   blog.getCategories()
-    .then((data) => 
-    res.render("categories", { categories: data }))
-    .catch((err) => 
-    res.render("categories", { message: "no results" }))
+    .then((data) => {
+      data.length > 0 ? res.render("categories", { categories: data }) : res.render("categories", { message: "No results" });
+    })
+    .catch((err) =>
+      res.render("categories", { message: "no results" }))
 })
 
 
 
-//Posts page (Updated A4)
+//Posts page (Updated A5..)
 //  /posts?catetogry=5
 //  /posts?minDate=2020-12-01 
 
-app.get("/posts", (req, res) => {    
+app.get("/posts", (req, res) => {
   if (req.query.category) {
     blog.getPostsByCategory(req.query.category)
-      .then((data) => 
-      res.render("posts", { posts: data }))
+      .then((data) => {
+        data.length > 0 ? res.render("posts", { posts: data }) : res.render("posts", { message: "No results" });
+      })
       .catch((err) =>
-      res.render("posts", { message: "No results" }));
+        res.render("posts", { message: "No results" }));
   }
 
   else if (req.query.minDate) {
     blog.getPostsByMinDate(req.query.minDate)
-      .then((data) => 
-      res.render("posts", { posts: data }))
+      .then((data) => {
+        data.length > 0 ? res.render("posts", { posts: data }) : res.render("posts", { message: "No results" });
+      })
       .catch((err) =>
-       res.render("posts", { message: "No results" }));
+        res.render("posts", { message: "No results" }));
   }
 
   else {
     blog.getAllPosts()
-      .then((data) => 
-      res.render("posts", { posts: data }))
-      .catch((err) => 
-      res.render("posts", { message: "No results" }));
+      .then((data) => {
+        data.length > 0 ? res.render("posts", { posts: data }) : res.render("posts", { message: "No results" });
+      })
+      .catch((err) =>
+        res.render("posts", { message: "No results" }));
   }
 });
 
@@ -271,7 +287,14 @@ app.get('/blog/:id', async (req, res) => {
 
 //Add post page redirect
 app.get("/posts/add", (req, res) => {
-  res.render("addPost");
+  blog.getCategories()
+    .then((data) => {
+      res.render('addPost', {
+        categories: data
+      });
+    }).catch(() => {
+      res.render('addPost'), { categories: [] }
+    })
 });
 
 
@@ -311,6 +334,52 @@ app.post("/posts/add", upload.single("featureImage"), (req, res, next) => {
 
   }
 });
+
+//********************A5 *************************************
+
+///categories/add
+app.get("/categories/add", (req, res) => {
+  res.render("addCategory");
+});
+
+
+///categories/add (POST)
+app.post("/categories/add", (req, res) => {
+  blog.addCategory(req.body)
+    .then(() => {
+      res.redirect('/categories');
+
+    }).catch(console.log("Unable to Add category"))
+});
+
+
+///categories/delete/:id
+app.get("/categories/delete/:id", (req, res) => {
+  blog.deleteCategoryById(req.params.id)
+    .then(() => {
+      res.redirect("/categories");
+    })
+    .catch(() => {
+      // console.log("Unable to Remove Category / Category not found");
+      res.status(500).send('Unable to Remove Category / Category not found');
+    });
+});
+
+
+
+///posts/delete/:id
+app.get("/posts/delete/:id", (req, res) => {
+  blog.deletePostById(req.params.id)
+    .then(() => {
+      res.redirect("/posts");
+    })
+    .catch(() => {
+      //console.log("Unable to Remove Posts / Post not found");
+      res.status(500).send('Unable to Remove Category / Category not found');
+    });
+});
+
+
 
 //Error 404 Page
 //Updated for A4 (used custom HTML and CSS) 
