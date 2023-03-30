@@ -8,6 +8,9 @@ References: https://pressbooks.senecacollege.ca/web322/chapter/backend-core-deve
 https://web322.ca/notes/week06
 https://cloudinary.com/blog/node_js_file_upload_to_a_local_server_or_to_the_cloud 
 https://codepen.io/ckroll17/pen/MzWgLo (404.hbs)
+https://web322.ca/notes/week07 
+
+
 *
 * Name: Aanand Aman Student ID: 166125211     Date: 2023/03/30
 *
