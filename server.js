@@ -378,7 +378,7 @@ app.get("/posts/delete/:id", (req, res) => {
     })
     .catch(() => {
      
-      res.status(500).send('Unable to Remove Category / Category not found');
+      res.status(500).send(' Category not found');
     });
 });
 
