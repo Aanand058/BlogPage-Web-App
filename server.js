@@ -14,7 +14,7 @@ https://web322.ca/notes/week10
 
 
 *
-* Name: Aanand Aman        Student ID: 166125211     Date: 2023/04/14
+* Name: Aanand Aman        Student ID: 166125211       Date: 2023/04/14
 *
 * Cyclic Web App URL: https://drab-ruby-caterpillar-tux.cyclic.app
 *
@@ -450,6 +450,8 @@ app.post("/register", (req, res) => {
     });
 });
 
+
+
 //POST/login
 app.post("/login", (req, res) => {
   req.body.userAgent = req.get('User-Agent');
@@ -479,7 +481,7 @@ app.get("/logout", function (req, res) {
 app.get("/userHistory", ensureLogin, (req, res) => {
   res.render("userHistory");
 })
-//**********************************************************************************  A6 Completes******************** */
+//**********************************************************************************  A6 Completes *********************/
 
 
 //Error 404 Page
