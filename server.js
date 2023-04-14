@@ -471,7 +471,7 @@ app.post("/login", (req, res) => {
 
 
 // Get/logout
-app.get("/logout", function (req, res) {
+app.get("/logout", (req, res) =>{
   req.session.reset();
   res.redirect("/");
 });
