@@ -2,15 +2,18 @@
   <div class="col-md-12">
     <h2>Register</h2>
     <hr />
+    
     {{#if errorMessage}}
     <div class="alert alert-danger"><strong>Error:</strong>
       {{errorMessage}}</div>
     {{/if}}
+
     {{#if successMessage}}
     <div class="alert alert-success"><strong>Success:</strong>
       {{successMessage}}</div>
     <a class="btn btn-success pull-right" href="/login">&nbsp;&nbsp;&nbsp;Proceed to Log
       in&nbsp;&nbsp;&nbsp;</a><br /><br /><br />
+
     {{else}}
     <form method="post" action="/register">
       <div class="row">
@@ -45,5 +48,6 @@
       <input type="submit" class="btn btn-success pull-right" value="Register" />
     </form>
     {{/if}}
+
   </div>
 </div>
