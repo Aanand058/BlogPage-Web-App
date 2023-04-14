@@ -106,13 +106,13 @@ function getPublishedPosts() {
 function getCategories() {
     return new Promise((resolve, reject) => {
         Category.findAll()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch(() => {
-            reject("no results returned");
-          });
-      });
+            .then((data) => {
+                resolve(data);
+            })
+            .catch(() => {
+                reject("no results returned");
+            });
+    });
 }
 
 
@@ -215,44 +215,44 @@ function getPublishedPostsByCategory(category) {
 function addCategory(categoryData) {
     return new Promise((resolve, reject) => {
 
-      if (categoryData.category == "") {
-        categoryData.category = null;
-      }
+        if (categoryData.category == "") {
+            categoryData.category = null;
+        }
 
-      Category.create(categoryData)
-        .then((category) => {
-          resolve("Operation was a success");
-        })
-        .catch(() => {
-          reject("unable to create category");
-        });
+        Category.create(categoryData)
+            .then((category) => {
+                resolve("Operation was a success");
+            })
+            .catch(() => {
+                reject("unable to create category");
+            });
     });
-  }
+}
 
 
 
 
-  function deleteCategoryById(id) {
+function deleteCategoryById(id) {
     return new Promise((resolve, reject) => {
-      Category.destroy({
-        where: { id: id }
-      }).then(resolve("Destroyed"));
+        Category.destroy({
+            where: { id: id }
+        }).then(resolve("Destroyed"));
     })
-      .catch(() => {
-        reject("Rejected");
-      });
-  }
+        .catch(() => {
+            reject("Rejected");
+        });
+}
 
 
-  function deletePostById(id) {
+function deletePostById(id) {
     return new Promise((resolve, reject) => {
-      Post.destroy({
-        where: { id: id }
-      }).then(resolve("Destroyed"));
+        Post.destroy({
+            where: { id: id }
+        }).then(resolve("Destroyed"));
     })
-      .catch(() => {
-        reject("Rejected");
-      })
-  }
+        .catch(() => {
+            reject("Rejected");
+        })
+}
 
-module.exports = { initialize, getPublishedPosts,addCategory,deletePostById, deleteCategoryById, getPublishedPostsByCategory, getAllPosts, getCategories, addPost, getPostsByCategory, getPostsByMinDate, getPostById };
+module.exports = { initialize, getPublishedPosts, addCategory, deletePostById, deleteCategoryById, getPublishedPostsByCategory, getAllPosts, getCategories, addPost, getPostsByCategory, getPostsByMinDate, getPostById };
