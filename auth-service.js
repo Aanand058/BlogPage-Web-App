@@ -49,7 +49,7 @@ let User; // to be defined on new connection (see initialize)
 
 function initialize() {
     return new Promise(function (resolve, reject) {
-        let db = mongoose.createConnection("mongodb+srv://aaman8:a1m2i3t4@cluster0.tupc0fw.mongodb.net/?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true });
+        let db = mongoose.createConnection("mongodb+srv://aaman8:a1m2i3t4@web422draft1.geic9qi.mongodb.net/?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true });
 
         db.on('error', (err) => {
             reject(err);   // reject the promise with the provided error
