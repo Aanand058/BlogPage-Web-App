@@ -1,45 +1,30 @@
-/*********************************************************************************
-* WEB322 – Assignment 06
-* I declare that this assignment is my own work in accordance with Seneca Academic Policy. No part
-* of this assignment has been copied manually or electronically from any other source
-* (including 3rd party web sites) or distributed to other students.
 
-References: https://pressbooks.senecacollege.ca/web322/chapter/backend-core-development-node-js-express-module/
-https://web322.ca/notes/week06
-https://cloudinary.com/blog/node_js_file_upload_to_a_local_server_or_to_the_cloud 
-https://codepen.io/ckroll17/pen/MzWgLo (404.hbs)
-https://web322.ca/notes/week07 
-https://web322.ca/notes/week08
-https://web322.ca/notes/week10
+   
+
+// Cyclic Web App URL: https://drab-ruby-caterpillar-tux.cyclic.app
+
+// GitHub Repository URL: https://github.com/Aanand058/web322-app
 
 
-*
-* Name: Aanand Aman        Student ID: 166125211       Date: 2023/04/14
-*
-* Cyclic Web App URL: https://drab-ruby-caterpillar-tux.cyclic.app
-*
-* GitHub Repository URL: https://github.com/Aanand058/web322-app
-*
-********************************************************************************/
 
-//A1 & A2
+
 const express = require("express");
 const app = express();
 const path = require("path");
 const blog = require("./blog-service.js");
 
-//Additional work for A3
+
 const multer = require("multer");
 const cloudinary = require('cloudinary').v2;
 const streamifier = require('streamifier');
 
 
-//Additional work for A4
+
 const exphbs = require('express-handlebars');
 const stripJs = require('strip-js');
 
 
-//Additional work for A6
+
 const authData = require("./auth-service");
 const clientSessions = require("client-sessions");
 
@@ -96,11 +81,8 @@ function ensureLogin(req, res, next) {
 
 
 
-//Connection String
-//mongodb+srv://aaman8:a1m2i3t4@cluster0.tupc0fw.mongodb.net/?retryWrites=true&w=majority
 
 
-///Additional work for A5 (middleware)
 app.use(express.urlencoded({ extended: true }));
 
 // Register handlebars as the rendering engine for views
@@ -215,7 +197,7 @@ app.get('/blog', async (req, res) => {
 
 
 
-//Cateories Page (Updated For A5)
+//Cateories Page 
 app.get("/categories", ensureLogin, (req, res) => {
   blog.getCategories()
     .then((data) => {
@@ -226,7 +208,6 @@ app.get("/categories", ensureLogin, (req, res) => {
 })
 
 
-//********************A5 *************************************
 
 ///categories/add
 app.get("/categories/add", ensureLogin, (req, res) => {
@@ -271,7 +252,7 @@ app.get("/posts/delete/:id", ensureLogin, (req, res) => {
 });
 
 
-//Posts page (Updated A5..)
+//Posts page 
 //  /posts?catetogry=5
 //  /posts?minDate=2020-12-01 
 
@@ -425,8 +406,6 @@ app.post("/posts/add", ensureLogin, upload.single("featureImage"), (req, res, ne
 
 
 
-//******************************************************** A6 Works *************************/
-
 
 //GET/login
 app.get("/login", (req, res) => {
@@ -481,7 +460,6 @@ app.get("/logout", (req, res) =>{
 app.get("/userHistory", ensureLogin, (req, res) => {
   res.render("userHistory");
 })
-//**********************************************************************************  A6 Completes *********************/
 
 
 //Error 404 Page
@@ -491,7 +469,7 @@ app.use((req, res) => {
 });
 
 
-// setup http server to listen on HTTP_PORT with initialize() method (updated A6)
+// setup http server to listen on HTTP_PORT with initialize() method 
 blog.initialize()
   .then(authData.initialize)
   .then(function () {

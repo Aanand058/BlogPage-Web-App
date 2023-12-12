@@ -1,30 +1,7 @@
 
-/*********************************************************************************
-* WEB322 – Assignment 06
-* I declare that this assignment is my own work in accordance with Seneca Academic Policy. No part
-* of this assignment has been copied manually or electronically from any other source
-* (including 3rd party web sites) or distributed to other students.
-
-References: https://pressbooks.senecacollege.ca/web322/chapter/backend-core-development-node-js-express-module/
-https://web322.ca/notes/week06
-https://cloudinary.com/blog/node_js_file_upload_to_a_local_server_or_to_the_cloud 
-https://codepen.io/ckroll17/pen/MzWgLo (404.hbs)
-https://web322.ca/notes/week07 
-https://web322.ca/notes/week08
-https://web322.ca/notes/week10
-
-
-*
-* Name: Aanand Aman        Student ID: 166125211     Date: 2023/04/14
-*
-* Cyclic Web App URL: https://drab-ruby-caterpillar-tux.cyclic.app
-*
-* GitHub Repository URL: https://github.com/Aanand058/web322-app
-*
-********************************************************************************/
 
 const mongoose = require("mongoose");
-//HAsing 
+
 const bcrypt = require("bcryptjs");
 
 //Creating Schema 
