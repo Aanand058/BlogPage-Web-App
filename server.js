@@ -1,13 +1,4 @@
 
-   
-
-// Cyclic Web App URL: https://drab-ruby-caterpillar-tux.cyclic.app
-
-// GitHub Repository URL: https://github.com/Aanand058/web322-app
-
-
-
-
 const express = require("express");
 const app = express();
 const path = require("path");
